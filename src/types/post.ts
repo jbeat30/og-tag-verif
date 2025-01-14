@@ -5,7 +5,7 @@ declare global {
     id: number;
     name: string;
     title: string;
-    user_type: string;
+    userType: string;
     content: string;
     thumbnail: string;
     mainImage: string;
