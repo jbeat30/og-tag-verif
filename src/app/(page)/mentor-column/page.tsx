@@ -16,8 +16,18 @@ export const metadata: Metadata = {
 }
 
 async function getMentorColumn() {
-  const response = await fetch('http://localhost:3000/api/mentor-column');
-  return response.json();
+  try {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/mentor-column');
+
+    if (!response.ok) {
+      throw new Error('서버 에러 발생');
+    }
+
+    return response.json();
+  } catch (e) {
+    console.error('API 호출 중 에러 발생:', e);
+    return [];
+  }
 }
 
 export default async function Page() {

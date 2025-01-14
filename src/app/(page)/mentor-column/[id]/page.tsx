@@ -1,12 +1,22 @@
 import Image from "next/image";
 
 async function getPostDetail(id: number | string) {
-  const response = await fetch(`http:localhost:3000/api/mentor-column/${id}`)
-  return response.json()
+  try {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_URL + `/mentor-column/${id}`)
+
+    if (!response.ok) {
+      throw new Error('서버 에러 발생');
+    }
+
+    return response.json()
+  } catch (e) {
+    console.error('API 호출 중 에러 발생:', e);
+    return [];
+  }
 }
 
 export async function generateMetadata({params}: { params: AsyncColumn }) {
-  const { id } = await params
+  const {id} = await params
   const data = await getPostDetail(id)
   return {
     title: data.title,
@@ -31,7 +41,7 @@ export async function generateMetadata({params}: { params: AsyncColumn }) {
 }
 
 export default async function Page({params}: { params: AsyncColumn }) {
-  const { id } = await params
+  const {id} = await params
   const data = await getPostDetail(id)
   return (
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
