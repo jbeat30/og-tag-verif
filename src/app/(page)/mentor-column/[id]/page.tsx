@@ -10,8 +10,23 @@ export async function generateMetadata({params}: { params: AsyncColumn }) {
   const data = await getPostDetail(id)
   return {
     title: data.title,
-    description: '멘토 컬럼 상세 페이지에서 멘토링 정보를 확인할 수 있습니다.',
+    description: `멘토 컬럼 상세 페이지에서 멘토링 정보를 확인할 수 있습니다. ${data.type} ${data.creData}`,
     keywords: data.type + ', 멘토컬럼, 카드 목록, 멘토링 정보, 멘토링 카드',
+    openGraph: {
+      title: data.title,
+      description: `멘토 컬럼 상세 페이지에서 멘토링 정보를 확인할 수 있습니다. ${data.type} ${data.creData}`,
+      type: 'website',
+      locale: 'ko_KR',
+      siteName: '멘토컬럼 상세 페이지',
+      images: [
+        {
+          url: data.mainImage,
+          width: 800,
+          height: 600,
+          alt: data.title
+        }
+      ]
+    }
   }
 }
 

@@ -6,6 +6,13 @@ export const metadata: Metadata = {
   title: "멘토컬럼 목록",
   description: "멘토컬럼의 카드 목록을 볼 수 있습니다.",
   keywords: "멘토컬럼, 카드 목록, 멘토링 정보, 멘토링 카드",
+  openGraph: {
+    title: "멘토컬럼 목록",
+    description: "멘토컬럼의 카드 목록을 볼 수 있습니다.",
+    type: "website",
+    locale: "ko_KR",
+    siteName: "멘토컬럼",
+  }
 }
 
 async function getMentorColumn() {
