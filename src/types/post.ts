@@ -2,7 +2,7 @@ declare global {
   type AsyncColumn = Promise<{ id: number | string }>;
 
   interface PostData {
-    id: number;
+    id: number | string;
     name: string;
     title: string;
     userType: string;
