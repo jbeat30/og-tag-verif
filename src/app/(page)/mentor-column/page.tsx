@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 async function getMentorColumn() {
   try {
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/mentor-column');
+    const response = await fetch(process.env.API_URL + '/mentor-column');
 
     if (!response.ok) {
       throw new Error('서버 에러 발생');

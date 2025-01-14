@@ -2,7 +2,7 @@ import Image from "next/image";
 
 async function getPostDetail(id: number | string) {
   try {
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL + `/mentor-column/${id}`)
+    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`)
 
     if (!response.ok) {
       throw new Error('서버 에러 발생');
