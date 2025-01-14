@@ -19,13 +19,6 @@ async function getPostDetail(id: number | string) {
   }
 }
 
-export async function generateStaticParams() {
-  const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
-  return response.map((post: PostData) => ({
-    id: post.id.toString(),
-  }));
-}
-
 export async function generateMetadata({ params }: { params: AsyncColumn }) {
   const { id } = await params;
   const data = await getPostDetail(id);
