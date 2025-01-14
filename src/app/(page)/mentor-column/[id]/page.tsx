@@ -27,7 +27,7 @@ export default async function Page({params}: { params: AsyncColumn }) {
         <div className="p-6">
           <h2 className="text-xl font-bold text-gray-800">{data.title}</h2>
           <h3 className="text-lg text-gray-600 mt-2">{data.userType}: {data.name}</h3>
-          <p className="text-gray-700 mt-4">{data.content}</p>
+          <p className="text-gray-700 mt-4">{data.type} {data.creData}</p>
         </div>
       </div>
 

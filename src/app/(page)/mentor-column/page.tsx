@@ -27,7 +27,7 @@ export default async function Page() {
 
                 <div className="p-6 text-center sm:p-7 md:p-5 xl:p-7">
                   <Link className="mb-4 text-gray-700 block text-xl font-semibold hover:text-primary sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px]" href={`mentor-column/${post.id}`}>{post.title}</Link>
-                  <p className="text-gray-700 mb-4 text-base leading-relaxed">{post.content}</p>
+                  <p className="text-gray-700 mb-4 text-base leading-relaxed">{post.type} {post.creData}</p>
                 </div>
 
               </div>

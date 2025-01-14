@@ -6,7 +6,8 @@ declare global {
     name: string;
     title: string;
     userType: string;
-    content: string;
+    type: string;
+    creData: string;
     thumbnail: string;
     mainImage: string;
   }
