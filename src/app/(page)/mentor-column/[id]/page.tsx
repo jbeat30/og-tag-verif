@@ -1,9 +1,11 @@
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import {notFound} from "next/navigation";
 
 async function getPostDetail(id: number | string) {
   try {
-    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`);
+    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`, {
+      next: {revalidate: 60}
+    });
 
     if (!response.ok) {
       return null; // 응답이 실패한 경우 null 반환
@@ -26,8 +28,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: AsyncColumn }) {
-  const { id } = await params;
+export async function generateMetadata({params}: { params: AsyncColumn }) {
+  const {id} = await params;
   const data = await getPostDetail(id);
 
   return {
@@ -52,8 +54,8 @@ export async function generateMetadata({ params }: { params: AsyncColumn }) {
   };
 }
 
-export default async function Page({ params }: { params: AsyncColumn }) {
-  const { id } = await params;
+export default async function Page({params}: { params: AsyncColumn }) {
+  const {id} = await params;
   const data = await getPostDetail(id);
 
   if (!data) {
@@ -69,7 +71,7 @@ export default async function Page({ params }: { params: AsyncColumn }) {
                 alt={data.title}
                 fill
                 quality={75}
-                style={{ objectFit: 'cover' }}
+                style={{objectFit: 'cover'}}
             />
           </div>
         </div>
