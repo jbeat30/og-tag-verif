@@ -1,11 +1,18 @@
 import Image from "next/image";
-// async function generateMetadata({params}: { params: AsyncColumn }) {
-//   const data = await params
-// }
 
 async function getPostDetail(id: number | string) {
   const response = await fetch(`http:localhost:3000/api/mentor-column/${id}`)
   return response.json()
+}
+
+export async function generateMetadata({params}: { params: AsyncColumn }) {
+  const { id } = await params
+  const data = await getPostDetail(id)
+  return {
+    title: data.title,
+    description: '멘토 컬럼 상세 페이지에서 멘토링 정보를 확인할 수 있습니다.',
+    keywords: data.type + ', 멘토컬럼, 카드 목록, 멘토링 정보, 멘토링 카드',
+  }
 }
 
 export default async function Page({params}: { params: AsyncColumn }) {
