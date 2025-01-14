@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { posts } from '@/lib/post';
 
 export async function GET() {
-  return NextResponse.json({ message: "안녕" });
+  return NextResponse.json(posts);
 }
