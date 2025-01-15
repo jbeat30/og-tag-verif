@@ -62,7 +62,7 @@ export default async function Page({ params }: { params: AsyncColumn }) {
         <div className="w-full flex justify-center">
           <div className="relative w-10/12 h-[500px]">
             <Image
-                src={data.mainImage}
+                src={data.mainImage + `?dt=${Date.now()}`}
                 alt={data.title}
                 fill
                 quality={75}
