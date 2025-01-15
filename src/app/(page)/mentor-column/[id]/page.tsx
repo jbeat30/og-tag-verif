@@ -3,6 +3,22 @@ import {notFound} from "next/navigation";
 
 export const revalidate = 60;
 
+export async function generateStaticParams() {
+  try {
+    const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
+
+    if (!response.ok) {
+      console.warn('fetch 실패:', response);
+      return [];
+    }
+
+    return response.map((post: PostData) => ({id: post.id.toString()}));
+  } catch (e) {
+    console.error('API 호출 중 에러 발생:', e);
+    return [];
+  }
+}
+
 async function getPostDetail(id: number | string) {
   try {
     const response = await fetch(process.env.API_URL + `/mentor-column/${id}`, {cache: 'force-cache'});
@@ -18,22 +34,6 @@ async function getPostDetail(id: number | string) {
   } catch (e) {
     console.error('API 호출 중 에러 발생:', e);
     return null; // 에러 발생 시 null 반환
-  }
-}
-
-export async function generateStaticParams() {
-  try {
-    const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
-
-    if (!response.ok) {
-      console.warn('fetch 실패:', response);
-      return [];
-    }
-
-    return response.map((post: PostData) => ({id: post.id.toString()}));
-  } catch (e) {
-    console.error('API 호출 중 에러 발생:', e);
-    return [];
   }
 }
 
