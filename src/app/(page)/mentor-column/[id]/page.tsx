@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+export const dynamic = 'force-dynamic';
+
 async function getPostDetail(id: number | string) {
   try {
     const response = await fetch(process.env.API_URL + `/mentor-column/${id}`,{
