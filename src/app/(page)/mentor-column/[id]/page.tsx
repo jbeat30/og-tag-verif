@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 
 async function getPostDetail(id: number | string) {
   try {
-    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`);
+    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`,{
+      cache: "no-cache"
+    });
 
     if (!response.ok) {
       return null; // 응답이 실패한 경우 null 반환
