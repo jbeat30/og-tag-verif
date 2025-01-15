@@ -4,21 +4,21 @@ import {notFound} from "next/navigation";
 export const dynamic = 'force-static';
 
 async function getPostDetail(id: number | string) {
-try {
-const response = await fetch(process.env.API_URL + `/mentor-column/${id}`,{cache: 'force-cache'});
+  try {
+    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`, {cache: 'force-cache'});
 
-if (!response.ok) {
-  return null; // 응답이 실패한 경우 null 반환
-}
+    if (!response.ok) {
+      return null; // 응답이 실패한 경우 null 반환
+    }
 
-const data = await response.json();
+    const data = await response.json();
 
 // 데이터가 없으면 null 반환
-return data || null;
-} catch (e) {
-console.error('API 호출 중 에러 발생:', e);
-return null; // 에러 발생 시 null 반환
-}
+    return data || null;
+  } catch (e) {
+    console.error('API 호출 중 에러 발생:', e);
+    return null; // 에러 발생 시 null 반환
+  }
 }
 
 // https://nextjs-ko.org/docs/app/api-reference/functions/generate-static-params#all-paths-at-build-time
@@ -27,8 +27,10 @@ export async function generateStaticParams() {
     const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
 
     if (!response.ok) {
+      console.warn('fetch 실패:', response);
       return [];
     }
+
     const data = response.map((post: PostData) => ({
       id: post.id.toString(),
     }))
