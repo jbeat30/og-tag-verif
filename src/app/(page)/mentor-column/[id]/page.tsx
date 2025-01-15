@@ -1,11 +1,13 @@
 import Image from "next/image";
 import {notFound} from "next/navigation";
 
+// https://nextjs-ko.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic
+export const dynamicParams = false; // 처음 빌드할때 생성된것 외의 모든 포스트는 404가 됨
+
+
 async function getPostDetail(id: number | string) {
   try {
-    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`, {
-      next: {revalidate: 60}
-    });
+    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`);
 
     if (!response.ok) {
       return null; // 응답이 실패한 경우 null 반환
@@ -21,6 +23,7 @@ async function getPostDetail(id: number | string) {
   }
 }
 
+// https://nextjs-ko.org/docs/app/api-reference/functions/generate-static-params#all-paths-at-build-time
 export async function generateStaticParams() {
   try {
     const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
