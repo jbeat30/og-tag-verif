@@ -26,7 +26,10 @@ export async function generateStaticParams() {
   try {
     const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
 
-    if (!response.ok) throw new Error('Failed to fetch');
+    if (!response.ok) {
+      console.warn('fetch 실패:', response);
+      return [];
+    }
 
     return response.map((post: PostData) => ({id: post.id.toString()}));
   } catch (e) {
