@@ -18,7 +18,9 @@ export const metadata: Metadata = {
 
 async function getMentorColumn() {
   try {
-    const response = await fetch(process.env.API_URL + '/mentor-column');
+    const response = await fetch(process.env.API_URL + '/mentor-column', {
+      cache: "no-cache"
+    });
 
     if (!response.ok) {
       return null; // 응답이 실패한 경우 null 반환
@@ -37,7 +39,7 @@ async function getMentorColumn() {
 export default async function Page() {
   const data = await getMentorColumn();
 
-  if(!data) {
+  if (!data) {
     notFound();
   }
 

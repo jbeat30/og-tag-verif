@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-export const dynamic = 'force-dynamic';
-
 async function getPostDetail(id: number | string) {
   try {
     const response = await fetch(process.env.API_URL + `/mentor-column/${id}`,{
@@ -67,7 +65,6 @@ export default async function Page({ params }: { params: AsyncColumn }) {
                 fill
                 quality={75}
                 style={{ objectFit: 'cover' }}
-                priority
             />
           </div>
         </div>
