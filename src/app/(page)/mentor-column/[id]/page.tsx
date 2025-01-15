@@ -1,11 +1,9 @@
 import Image from "next/image";
-import {notFound} from "next/navigation";
+import { notFound } from "next/navigation";
 
 async function getPostDetail(id: number | string) {
   try {
-    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`, {
-      next: {revalidate: 60}
-    });
+    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`);
 
     if (!response.ok) {
       return null; // 응답이 실패한 경우 null 반환
@@ -21,25 +19,8 @@ async function getPostDetail(id: number | string) {
   }
 }
 
-export async function generateStaticParams() {
-  try {
-    const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
-
-    if (!response.ok) {
-      return [];
-    }
-    const data = response.map((post: PostData) => ({
-      id: post.id.toString(),
-    }))
-    return data || [];
-  } catch (e) {
-    console.error('API 호출 중 에러 발생:', e);
-    return [];
-  }
-}
-
-export async function generateMetadata({params}: { params: AsyncColumn }) {
-  const {id} = await params;
+export async function generateMetadata({ params }: { params: AsyncColumn }) {
+  const { id } = await params;
   const data = await getPostDetail(id);
 
   return {
@@ -64,12 +45,12 @@ export async function generateMetadata({params}: { params: AsyncColumn }) {
   };
 }
 
-export default async function Page({params}: { params: AsyncColumn }) {
-  const {id} = await params;
+export default async function Page({ params }: { params: AsyncColumn }) {
+  const { id } = await params;
   const data = await getPostDetail(id);
 
   if (!data) {
-    return notFound(); // 데이터가 없으면 notFound 호출
+    notFound(); // 데이터가 없으면 notFound 호출
   }
 
   return (
@@ -81,7 +62,7 @@ export default async function Page({params}: { params: AsyncColumn }) {
                 alt={data.title}
                 fill
                 quality={75}
-                style={{objectFit: 'cover'}}
+                style={{ objectFit: 'cover' }}
             />
           </div>
         </div>
