@@ -22,10 +22,20 @@ async function getPostDetail(id: number | string) {
 }
 
 export async function generateStaticParams() {
-  const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
-  return response.map((post: PostData) => ({
-    id: post.id.toString(),
-  }));
+  try {
+    const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
+    if(!response) {
+      return [];
+    }
+    const data = response.map((post: PostData) => ({
+      id: post.id.toString(),
+    }));
+
+    return data || []
+  } catch(e) {
+    console.error('API 호출 중 에러 발생:', e);
+    return [];
+  }
 }
 
 export async function generateMetadata({params}: { params: AsyncColumn }) {

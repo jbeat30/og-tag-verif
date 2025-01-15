@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import {Metadata} from "next";
+import {notFound} from "next/navigation";
 
 export const metadata: Metadata = {
   title: "멘토컬럼 목록",
@@ -35,6 +36,10 @@ async function getMentorColumn() {
 
 export default async function Page() {
   const data = await getMentorColumn();
+
+  if(!data) {
+    notFound();
+  }
 
   return (
       <section className="bg-gray-2 pb-10 pt-20 lg:pb-20 lg:pt-[120px]">
