@@ -37,8 +37,8 @@ async function getMentorColumn() {
 export default async function Page() {
   const data = await getMentorColumn();
 
-  if (!data) {
-    notFound(); // 데이터가 없으면 notFound 호출
+  if(!data) {
+    notFound();
   }
 
   return (
