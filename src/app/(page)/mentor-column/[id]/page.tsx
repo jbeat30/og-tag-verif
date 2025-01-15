@@ -67,6 +67,7 @@ export default async function Page({ params }: { params: AsyncColumn }) {
                 fill
                 quality={75}
                 style={{ objectFit: 'cover' }}
+                priority
             />
           </div>
         </div>
