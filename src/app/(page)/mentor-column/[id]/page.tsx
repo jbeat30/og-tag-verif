@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic"
+
 async function getPostDetail(id: number | string) {
   try {
-    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`,{
+    const response = await fetch(`${process.env.API_URL}/mentor-column/${id}`,{
       cache: "no-cache"
     });
 
@@ -11,10 +13,7 @@ async function getPostDetail(id: number | string) {
       return null; // 응답이 실패한 경우 null 반환
     }
 
-    const data = await response.json();
-
-    // 데이터가 없으면 null 반환
-    return data || null;
+    return response.json();
   } catch (e) {
     console.error('API 호출 중 에러 발생:', e);
     return null; // 에러 발생 시 null 반환
@@ -60,7 +59,7 @@ export default async function Page({ params }: { params: AsyncColumn }) {
         <div className="w-full flex justify-center">
           <div className="relative w-10/12 h-[500px]">
             <Image
-                src={data.mainImage + `?dt=${Date.now()}`}
+                src={data.mainImage}
                 alt={data.title}
                 fill
                 quality={75}

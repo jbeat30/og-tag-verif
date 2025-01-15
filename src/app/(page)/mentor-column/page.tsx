@@ -3,7 +3,7 @@ import Image from "next/image";
 import {Metadata} from "next";
 import {notFound} from "next/navigation";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
   title: "멘토컬럼 목록",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 async function getMentorColumn() {
   try {
-    const response = await fetch(process.env.API_URL + '/mentor-column', {
+    const response = await fetch(`${process.env.API_URL}/mentor-column`, {
       cache: "no-cache"
     });
 
@@ -28,10 +28,7 @@ async function getMentorColumn() {
       return null; // 응답이 실패한 경우 null 반환
     }
 
-    const data = await response.json();
-
-    // 데이터가 없으면 null 반환
-    return data || null;
+    return response.json();
   } catch (e) {
     console.error('API 호출 중 에러 발생:', e);
     return null; // 에러 발생 시 null 반환
