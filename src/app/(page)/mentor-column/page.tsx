@@ -3,6 +3,8 @@ import Image from "next/image";
 import {Metadata} from "next";
 import {notFound} from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "멘토컬럼 목록",
   description: "멘토컬럼의 카드 목록을 볼 수 있습니다.",
