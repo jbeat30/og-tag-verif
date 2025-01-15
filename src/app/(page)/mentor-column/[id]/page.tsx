@@ -2,7 +2,7 @@ import Image from "next/image";
 import {notFound} from "next/navigation";
 
 // https://nextjs-ko.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic
-export const dynamicParams = false; // 처음 빌드할때 생성된것 외의 모든 포스트는 404가 됨
+export const dynamicParams = true; // 처음 빌드할때 생성된것 외의 모든 포스트는 404가 됨
 
 
 async function getPostDetail(id: number | string) {
