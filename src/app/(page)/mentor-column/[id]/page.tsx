@@ -22,10 +22,20 @@ async function getPostDetail(id: number | string) {
 }
 
 export async function generateStaticParams() {
-  const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
-  return response.map((post: PostData) => ({
-    id: post.id.toString(),
-  }));
+  try {
+    const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
+
+    if (!response.ok) {
+      return [];
+    }
+    const data = response.map((post: PostData) => ({
+      id: post.id.toString(),
+    }))
+    return data || [];
+  } catch (e) {
+    console.error('API 호출 중 에러 발생:', e);
+    return [];
+  }
 }
 
 export async function generateMetadata({params}: { params: AsyncColumn }) {
@@ -59,7 +69,7 @@ export default async function Page({params}: { params: AsyncColumn }) {
   const data = await getPostDetail(id);
 
   if (!data) {
-    notFound(); // 데이터가 없으면 notFound 호출
+    return notFound(); // 데이터가 없으면 notFound 호출
   }
 
   return (
