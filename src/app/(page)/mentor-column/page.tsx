@@ -20,17 +20,16 @@ async function getMentorColumn() {
   try {
     const response = await fetch(process.env.API_URL + '/mentor-column');
 
-    if (!response.ok) {
-      return null; // 응답이 실패한 경우 null 반환
+    if (!response) {
+      return null;
     }
 
     const data = await response.json();
 
-    // 데이터가 없으면 null 반환
     return data || null;
   } catch (e) {
     console.error('API 호출 중 에러 발생:', e);
-    return null; // 에러 발생 시 null 반환
+    return null;
   }
 }
 

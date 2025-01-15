@@ -7,7 +7,7 @@ export async function generateStaticParams() {
   try {
     const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
 
-    if (!response.ok) {
+    if (!response) {
       console.warn('fetch 실패:', response);
       return [];
     }
