@@ -1,26 +1,24 @@
 import Image from "next/image";
 import {notFound} from "next/navigation";
 
-// https://nextjs-ko.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic
-export const dynamicParams = true; // 처음 빌드할때 생성된것 외의 모든 포스트는 404가 됨
-
+export const dynamic = 'force-static';
 
 async function getPostDetail(id: number | string) {
-  try {
-    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`);
+try {
+const response = await fetch(process.env.API_URL + `/mentor-column/${id}`,{cache: 'force-cache'});
 
-    if (!response.ok) {
-      return null; // 응답이 실패한 경우 null 반환
-    }
+if (!response.ok) {
+  return null; // 응답이 실패한 경우 null 반환
+}
 
-    const data = await response.json();
+const data = await response.json();
 
-    // 데이터가 없으면 null 반환
-    return data || null;
-  } catch (e) {
-    console.error('API 호출 중 에러 발생:', e);
-    return null; // 에러 발생 시 null 반환
-  }
+// 데이터가 없으면 null 반환
+return data || null;
+} catch (e) {
+console.error('API 호출 중 에러 발생:', e);
+return null; // 에러 발생 시 null 반환
+}
 }
 
 // https://nextjs-ko.org/docs/app/api-reference/functions/generate-static-params#all-paths-at-build-time
