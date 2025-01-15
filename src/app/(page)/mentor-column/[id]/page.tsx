@@ -1,11 +1,12 @@
 import Image from "next/image";
 import {notFound} from "next/navigation";
 
+export const dynamic = 'force-static';
+export const revalidate = 60;
+
 async function getPostDetail(id: number | string) {
   try {
-    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`, {
-      next: {revalidate: 60}
-    });
+    const response = await fetch(process.env.API_URL + `/mentor-column/${id}`, {cache: 'force-cache'});
 
     if (!response.ok) {
       return null; // 응답이 실패한 경우 null 반환
@@ -24,15 +25,11 @@ async function getPostDetail(id: number | string) {
 export async function generateStaticParams() {
   try {
     const response = await fetch(process.env.API_URL + '/mentor-column').then((res) => res.json());
-    if(!response) {
-      return [];
-    }
-    const data = response.map((post: PostData) => ({
-      id: post.id.toString(),
-    }));
 
-    return data || []
-  } catch(e) {
+    if (!response.ok) throw new Error('Failed to fetch');
+
+    return response.map((post: PostData) => ({id: post.id.toString()}));
+  } catch (e) {
     console.error('API 호출 중 에러 발생:', e);
     return [];
   }
