@@ -66,10 +66,10 @@ export async function generateMetadata(props: {
       siteName: '멘토컬럼 목록 페이지',
       images: [
         {
-          url: data.mainImage,
+          url: target.mainImage,
           width: 800,
           height: 600,
-          alt: data.title,
+          alt: target.title,
         },
       ],
     },
