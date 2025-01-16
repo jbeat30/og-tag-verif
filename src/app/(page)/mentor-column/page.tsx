@@ -5,7 +5,9 @@ import {notFound} from "next/navigation";
 
 export const dynamic = "force-dynamic"
 
-export const metadata: Metadata = {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+
+const defaultMetadata: Metadata = {
   title: "멘토컬럼 목록",
   description: "멘토컬럼의 카드 목록을 볼 수 있습니다.",
   keywords: "멘토컬럼, 카드 목록, 멘토링 정보, 멘토링 카드",
@@ -33,6 +35,45 @@ async function getMentorColumn() {
     console.error('API 호출 중 에러 발생:', e);
     return null; // 에러 발생 시 null 반환
   }
+}
+
+export async function generateMetadata(props: {
+  searchParams: SearchParams
+}):Promise<Metadata> {
+  const searchParams = await props.searchParams
+  const id = searchParams.id
+
+  const data = await getMentorColumn();
+  const target = data.find((post:PostData)=> post.id == id)
+
+  if (!target) {
+    return defaultMetadata
+  }
+
+  const title = target.title || defaultMetadata.title
+  const descriptionValue = target.type && `멘토 컬럼 상세 페이지에서 멘토링 정보를 확인할 수 있습니다. ${target.type} ${target.creData}` || defaultMetadata.description
+  const keywords = target.type + ', 멘토컬럼, 카드 목록, 멘토링 정보, 멘토링 카드' || defaultMetadata.keywords
+
+  return {
+    title: title,
+    description: descriptionValue,
+    keywords: keywords,
+    openGraph: {
+      title: title,
+      description: descriptionValue,
+      type: 'website',
+      locale: 'ko_KR',
+      siteName: '멘토컬럼 목록 페이지',
+      images: [
+        {
+          url: data.mainImage,
+          width: 800,
+          height: 600,
+          alt: data.title,
+        },
+      ],
+    },
+  };
 }
 
 export default async function Page() {
