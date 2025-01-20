@@ -19,9 +19,14 @@ async function getPostDetail(id: number | string) {
   }
 }
 
-export default function Page({ params } : { params: { id: number | string } }) {
-  const { id } = params;
-  const [data, setData] = useState<PostData>();
+export default async function Page({ params }: { params: AsyncColumn }) {
+  const { id } = await params;
+
+  return <ViewComponent id={id}/>
+}
+
+const ViewComponent = ({ id }: { id: number | string }) => {
+  const [data, setData] = useState<PostData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +50,7 @@ export default function Page({ params } : { params: { id: number | string } }) {
                 alt={data.title}
                 fill
                 quality={75}
-                style={{ objectFit: 'cover' }}
+                style={{objectFit: 'cover'}}
             />
           </div>
         </div>
@@ -55,5 +60,5 @@ export default function Page({ params } : { params: { id: number | string } }) {
           <p className="text-gray-700 mt-4">{data.type} {data.creData}</p>
         </div>
       </div>
-  );
+  )
 }
