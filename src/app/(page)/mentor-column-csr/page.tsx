@@ -7,7 +7,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mentor-column`, {
+        const response = await fetch(`${process.env.API_URL}/mentor-column`, {
           cache: "no-cache",
         });
 
